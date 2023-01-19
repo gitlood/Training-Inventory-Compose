@@ -17,7 +17,7 @@
 package com.example.inventory.ui.item
 
 import androidx.lifecycle.ViewModel
-import com.example.inventory.data.repository.interfaces.ItemsRepository
+import com.example.inventory.core.data.repository.interfaces.ItemsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

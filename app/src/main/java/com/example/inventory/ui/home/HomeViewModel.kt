@@ -17,7 +17,7 @@
 package com.example.inventory.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.inventory.data.Item
+import com.example.inventory.core.data.util.Item
 
 /**
  * View Model to retrieve all items in the Room database.

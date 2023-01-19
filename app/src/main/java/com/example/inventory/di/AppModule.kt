@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.example.inventory.InventoryApplication
 import com.example.inventory.core.util.DATABASE_NAME
-import com.example.inventory.data.InventoryDatabase
-import com.example.inventory.data.repository.OfflineItemsRepository
-import com.example.inventory.data.repository.interfaces.ItemsRepository
+import com.example.inventory.core.data.InventoryDatabase
+import com.example.inventory.core.data.repository.OfflineItemsRepository
+import com.example.inventory.core.data.repository.interfaces.ItemsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

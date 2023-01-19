@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-package com.example.inventory.data.repository.interfaces
+package com.example.inventory.core.data.repository.interfaces
 
 interface ItemsRepository

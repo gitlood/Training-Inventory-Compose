@@ -16,7 +16,7 @@
 
 package com.example.inventory.ui.item
 
-import com.example.inventory.data.Item
+import com.example.inventory.core.data.util.Item
 
 /**
  * Represents Ui State for an Item.

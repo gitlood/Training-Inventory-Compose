@@ -1,4 +1,4 @@
-package com.example.inventory.data
+package com.example.inventory.core.data.util
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
