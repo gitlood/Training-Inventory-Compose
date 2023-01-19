@@ -28,7 +28,8 @@ import javax.inject.Inject
  * ViewModel to retrieve and update an item from the [ItemsRepository]'s data source.
  */
 @HiltViewModel
-class ItemEditViewModel @Inject constructor(): ViewModel() {
+class ItemEditViewModel @Inject constructor(private val itemsRepository: ItemsRepository) :
+    ViewModel() {
 
     /**
      * Holds current item ui state
@@ -36,6 +37,6 @@ class ItemEditViewModel @Inject constructor(): ViewModel() {
     private val _itemUiState = MutableStateFlow(ItemUiState())
     val itemUiState: StateFlow<ItemUiState> = _itemUiState.asStateFlow()
 
-    private val itemId: Int = checkNotNull(_itemUiState.value.id)
+    private val itemId: Int = checkNotNull(_itemUiState.value.itemDetails.id)
 
 }
