@@ -3,10 +3,11 @@ package com.example.inventory.di
 import android.content.Context
 import androidx.room.Room
 import com.example.inventory.InventoryApplication
-import com.example.inventory.core.util.DATABASE_NAME
 import com.example.inventory.core.data.InventoryDatabase
 import com.example.inventory.core.data.repository.OfflineItemsRepository
 import com.example.inventory.core.data.repository.interfaces.ItemsRepository
+import com.example.inventory.core.data.util.ItemDao
+import com.example.inventory.core.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +33,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideItemsRepository(): ItemsRepository = OfflineItemsRepository()
+    fun provideItemsRepository(itemDao: ItemDao): ItemsRepository = OfflineItemsRepository(itemDao)
+
+    @Singleton
+    @Provides
+    fun provideItemDao(db:InventoryDatabase) = db.itemDao()
 
 }
