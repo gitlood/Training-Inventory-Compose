@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -33,10 +34,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideItemsRepository(itemDao: ItemDao): ItemsRepository = OfflineItemsRepository(itemDao)
+    fun provideItemsRepository(
+        itemDao: ItemDao
+    ): ItemsRepository = OfflineItemsRepository(itemDao)
 
     @Singleton
     @Provides
-    fun provideItemDao(db:InventoryDatabase) = db.itemDao()
+    fun provideItemDao(db: InventoryDatabase) = db.itemDao()
+
+    @Singleton
+    @Provides
+    fun provideCoroutineDispatcher() = Dispatchers.IO
 
 }

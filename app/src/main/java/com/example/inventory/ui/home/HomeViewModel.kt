@@ -17,19 +17,41 @@
 package com.example.inventory.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.inventory.core.data.util.Item
+import androidx.lifecycle.viewModelScope
+import com.example.inventory.core.data.repository.interfaces.ItemsRepository
+import com.example.inventory.ui.home.util.HomeUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * View Model to retrieve all items in the Room database.
  */
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: ItemsRepository,
+    coroutineDispatcher: CoroutineDispatcher
+) : ViewModel() {
+
+    private val _homeUiState = MutableStateFlow(HomeUiState())
+    val homeUiState: StateFlow<HomeUiState> = _homeUiState
+
+    init {
+        viewModelScope.launch(coroutineDispatcher) {
+            _homeUiState.update {
+                it.copy(
+                    itemList = repository.getAllItemsStream().first()
+                )
+            }
+        }
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
 }
-
-/**
- * Ui State for HomeScreen
- */
-data class HomeUiState(val itemList: List<Item> = listOf())
