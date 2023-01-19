@@ -20,7 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.inventory.data.ItemsRepository
+import com.example.inventory.data.repository.interfaces.ItemsRepository
 
 /**
  * View Model to validate and insert items in the Room database.
