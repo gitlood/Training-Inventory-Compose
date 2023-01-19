@@ -16,28 +16,39 @@
 
 package com.example.inventory.ui.item
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.inventory.data.repository.interfaces.ItemsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 /**
  * View Model to validate and insert items in the Room database.
  */
-class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewModel() {
+@HiltViewModel
+class ItemEntryViewModel @Inject constructor(private val itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
      * Holds current item ui state
      */
-    var itemUiState by mutableStateOf(ItemUiState())
-        private set
+    private val _itemUiState = MutableStateFlow(ItemUiState())
+    val itemUiState: StateFlow<ItemUiState> = _itemUiState.asStateFlow()
 
     /**
      * Updates the [itemUiState] with the value provided in the argument. This method also triggers
      * a validation for input values.
      */
-    fun updateUiState(newItemUiState: ItemUiState) {
-        itemUiState = newItemUiState.copy( actionEnabled = newItemUiState.isValid())
+    fun updateUiState(itemUiState: ItemUiState) {
+        _itemUiState.update {
+            it.copy(
+                name = itemUiState.name,
+                price = itemUiState.price,
+                quantity = itemUiState.quantity,
+                actionEnabled = itemUiState.actionEnabled
+            )
+        }
     }
 }

@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.example.inventory.InventoryApplication
 import com.example.inventory.core.util.DATABASE_NAME
 import com.example.inventory.data.InventoryDatabase
+import com.example.inventory.data.repository.OfflineItemsRepository
+import com.example.inventory.data.repository.interfaces.ItemsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +23,15 @@ object AppModule {
     fun provideApplication(@ApplicationContext app: Context): InventoryApplication {
         return app as InventoryApplication
     }
+
     @Singleton
     @Provides
     fun provideNotesDatabase(
         @ApplicationContext context: Context
     ) = Room.databaseBuilder(context, InventoryDatabase::class.java, DATABASE_NAME).build()
+
+    @Singleton
+    @Provides
+    fun provideItemsRepository(): ItemsRepository = OfflineItemsRepository()
 
 }

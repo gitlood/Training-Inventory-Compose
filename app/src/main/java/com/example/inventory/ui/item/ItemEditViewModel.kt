@@ -28,7 +28,7 @@ import javax.inject.Inject
  * ViewModel to retrieve and update an item from the [ItemsRepository]'s data source.
  */
 @HiltViewModel
-class ItemEditViewModel @Inject constructor() : ViewModel() {
+class ItemEditViewModel @Inject constructor(): ViewModel() {
 
     /**
      * Holds current item ui state
