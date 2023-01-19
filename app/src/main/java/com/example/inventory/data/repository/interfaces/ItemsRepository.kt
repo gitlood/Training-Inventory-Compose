@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-package com.example.inventory.data
+package com.example.inventory.data.repository.interfaces
 
-class OfflineItemsRepository : ItemsRepository
+interface ItemsRepository

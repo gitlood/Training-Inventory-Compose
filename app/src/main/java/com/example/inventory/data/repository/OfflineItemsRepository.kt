@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.example.inventory.data
+package com.example.inventory.data.repository
 
-/**
- * Repository that provides insert, update, delete, and retrieve of [Item] from a given data source.
- */
-interface ItemsRepository
+import com.example.inventory.data.repository.interfaces.ItemsRepository
+
+class OfflineItemsRepository : ItemsRepository
