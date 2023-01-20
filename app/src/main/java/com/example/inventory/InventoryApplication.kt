@@ -17,7 +17,18 @@
 package com.example.inventory
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.inventory.core.data.AppContainer
+import com.example.inventory.core.data.AppDataContainer
 
-@HiltAndroidApp
-class InventoryApplication : Application()
+class InventoryApplication : Application() {
+
+    /**
+     * AppContainer instance used by the rest of classes to obtain dependencies
+     */
+    lateinit var container: AppContainer
+
+    override fun onCreate() {
+        super.onCreate()
+        container = AppDataContainer(this)
+    }
+}

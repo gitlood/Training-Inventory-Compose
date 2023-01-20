@@ -19,39 +19,35 @@ package com.example.inventory.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inventory.core.data.repository.interfaces.ItemsRepository
-import com.example.inventory.ui.home.util.HomeUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.inventory.core.data.util.Item
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 /**
  * View Model to retrieve all items in the Room database.
  */
-@HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val repository: ItemsRepository,
-    coroutineDispatcher: CoroutineDispatcher
-) : ViewModel() {
+class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
 
-    private val _homeUiState = MutableStateFlow(HomeUiState())
-    val homeUiState: StateFlow<HomeUiState> = _homeUiState
-
-    init {
-        viewModelScope.launch(coroutineDispatcher) {
-            _homeUiState.update {
-                it.copy(
-                    itemList = repository.getAllItemsStream().first()
-                )
-            }
-        }
-    }
+    /**
+     * Holds home ui state. The list of items are retrieved from [ItemsRepository] and mapped to
+     * [HomeUiState]
+     */
+    val homeUiState: StateFlow<HomeUiState> =
+        itemsRepository.getAllItemsStream().map { HomeUiState(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = HomeUiState()
+            )
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
 }
+
+/**
+ * Ui State for HomeScreen
+ */
+data class HomeUiState(val itemList: List<Item> = listOf())
